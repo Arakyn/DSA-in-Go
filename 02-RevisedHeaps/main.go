@@ -2,37 +2,50 @@ package main
 
 import "fmt"
 
-type MaxHeap struct {
+type Heap struct {
 	array []int
 }
 
-func (h *MaxHeap) Insert(key int) {
+func (h *Heap) insert(key int) {
 	h.array = append(h.array, key)
 	h.maxHeapifyUp(len(h.array) - 1)
 
 }
 
-func (h *MaxHeap) maxHeapifyUp(index int) {
-	for h.array[getParent(index)] < h.array[index] {
-		h.swap(getParent(index), index)
-		index = getParent(index)
-
-	}
-}
 func getParent(index int) int {
 
 	return (index - 1) / 2
 }
-func (h *MaxHeap) swap(parent, child int) {
+func left(parent int) int {
+	return (parent * 2) + 1
+}
+func right(parent int) int {
+	return (parent * 2) + 2
+}
+
+func (h *Heap) swapper(parent int, child int) {
+
 	h.array[parent], h.array[child] = h.array[child], h.array[parent]
+
+}
+
+func (h *Heap) maxHeapifyUp(index int) {
+	for h.array[getParent(index)] < h.array[index] {
+		h.swapper(getParent(index), index)
+		index = getParent(index)
+
+	}
+
 }
 
 func main() {
-	m := &MaxHeap{}
-	buildingHeap := []int{1, 2, 3, 4, 5, 6}
-	for _, v := range buildingHeap {
-		m.Insert(v)
+
+	a := *&Heap{}
+	array := []int{10, 20, 30, 40, 50}
+
+	for _, v := range array {
+		a.insert(v)
 	}
-	fmt.Println(m)
+	fmt.Println(a)
 
 }
