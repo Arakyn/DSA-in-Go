@@ -95,14 +95,16 @@ func (h *MaxHeap) swap(parent, child int) {
 func main() {
 	m := &MaxHeap{}
 	fmt.Println(m)
-	buildHeap := []int{10, 20, 30, 40, 50, 700, 23}
+	buildHeap := []int{1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16}
 	for _, v := range buildHeap {
 		m.Insert(v)
+		fmt.Println(m)
 	}
 	fmt.Println(m)
-	m.Extract()
-	fmt.Println(m)
-	m.Insert(700)
-	fmt.Println(m)
+
+	for i := 1; i < 5; i++ {
+		m.Extract()
+		fmt.Println(m)
+	}
 
 }

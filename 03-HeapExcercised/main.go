@@ -34,6 +34,7 @@ func (h *MaxHeap) extract() int {
 	}
 	h.array[0] = h.array[len(h.array)-1]
 	h.array = h.array[:len(h.array)-1]
+	h.maxHeapifyUp(0)
 
 	return extracted
 
@@ -52,12 +53,15 @@ func (h *MaxHeap) maxHeapifyUp(index int) {
 		} else if h.array[l] > h.array[r] {
 			childtocompare = l
 
-		} else if h.array[l] < h.array[r] {
+		} else {
 			childtocompare = r
 		}
 
 		if h.array[index] < h.array[childtocompare] {
 			h.swap(index, childtocompare)
+			index = childtocompare
+			l, r = left(index), right(index)
+
 		} else {
 			return
 		}
@@ -98,6 +102,10 @@ func main() {
 	for _, v := range array {
 		m.insert(v)
 		fmt.Println(m.array)
+	}
+	for i := 0; i < 5; i++ {
+		m.extract()
+		fmt.Println(m)
 	}
 
 }
