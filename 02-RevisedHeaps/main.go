@@ -6,6 +6,50 @@ type Heap struct {
 	array []int
 }
 
+func (h *Heap) extract() int {
+
+	extracted := h.array[0]
+
+	if len(h.array) == 0 {
+		fmt.Println("Cannot extract because the lenght of array is 0")
+		return -1
+	}
+
+	h.array[0] = h.array[len(h.array)-1]
+	h.array = h.array[:len(h.array)-1]
+
+	return extracted
+
+}
+
+func (h *Heap) maxHeapifyDown(index int) {
+
+	lastIndex := len(h.array) - 1
+	l, r := left(index), right(index)
+	childtocompare := 0
+
+	for l <= lastIndex {
+		if l == lastIndex {
+			childtocompare = l
+		} else if h.array[l] > h.array[r] {
+			childtocompare = l
+
+		} else {
+
+			childtocompare = r
+		}
+		if h.array[index] < h.array[childtocompare] {
+			h.swapper(index, childtocompare)
+			index = childtocompare
+			l, r = left(index), right(index)
+		} else {
+			return
+		}
+
+	}
+
+}
+
 func (h *Heap) insert(key int) {
 	h.array = append(h.array, key)
 	h.maxHeapifyUp(len(h.array) - 1)
